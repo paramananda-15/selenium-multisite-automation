@@ -1,7 +1,8 @@
 package com.example;
 
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.WindowType;
 
 import java.time.Duration;
@@ -10,9 +11,12 @@ public class App {
 
     public static void main(String[] args) throws InterruptedException {
 
-        WebDriver driver = new FirefoxDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
 
-        driver.manage().window().maximize();
+        WebDriver driver = new ChromeDriver(options);
+
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         // ---------------- TAB 1 ----------------
@@ -44,7 +48,6 @@ public class App {
 
         Thread.sleep(3000);
 
-        // close popup if present
         try {
             driver.findElement(By.xpath("//svg")).click();
             System.out.println("Ad popup closed");
